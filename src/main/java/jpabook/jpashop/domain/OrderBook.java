@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class OrderBook {
+public class OrderBook  extends BaseEntity{
 
     @Id
     @GeneratedValue

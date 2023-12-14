@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Embeddable
 @Getter
-public class Address {
+public class Address extends BaseEntity{
 
     private String city;
     private String street;

@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Member {
+public class Member  extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -23,15 +24,26 @@ public class Member {
 
     private String phone_number;
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    private String provider;
+    private String providerId;
 
-
-
-
-
-
+    @Builder
+    public Member(String name,Address address,String phone_number,MemberRole role, List<Order> orders, String provider, String providerId
+    ){
+        this.name=name;
+        this.address=address;
+        this.phone_number=phone_number;
+        this.role=role;
+        this.orders=orders;
+        this.provider=provider;
+        this.providerId=providerId;
+    }
 
 
 
@@ -50,5 +62,13 @@ public class Member {
 
     public List<Order> getOrders() {
         return orders;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public MemberRole getRole() {
+        return role;
     }
 }

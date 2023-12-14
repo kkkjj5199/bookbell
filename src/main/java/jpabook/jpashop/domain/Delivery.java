@@ -2,10 +2,15 @@ package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
-public class Delivery {
+@SuperBuilder
+@NoArgsConstructor
+public class Delivery  extends BaseEntity{
+
     @Id
     @GeneratedValue
     @Column(name = "deliver_id")

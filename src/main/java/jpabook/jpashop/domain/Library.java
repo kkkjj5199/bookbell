@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Library {
+public class Library  extends BaseEntity{
 
     @Id
     @GeneratedValue
