@@ -19,6 +19,10 @@ public class Member  extends BaseEntity {
 
     private String name;
 
+    private String password;
+
+    private String email;
+
     @Embedded
     private Address address;
 
@@ -34,9 +38,11 @@ public class Member  extends BaseEntity {
     private String providerId;
 
     @Builder
-    public Member(String name,Address address,String phone_number,MemberRole role, List<Order> orders, String provider, String providerId
+    public Member(String name, String password, String email, Address address,String phone_number,MemberRole role, List<Order> orders, String provider, String providerId
     ){
         this.name=name;
+        this.password = password;
+        this.email = email;
         this.address=address;
         this.phone_number=phone_number;
         this.role=role;
@@ -56,6 +62,8 @@ public class Member  extends BaseEntity {
         return name;
     }
 
+    public String getPassword() { return  password;}
+
     public Address getAddress() {
         return address;
     }
@@ -70,5 +78,17 @@ public class Member  extends BaseEntity {
 
     public MemberRole getRole() {
         return role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public String getProviderId() {
+        return providerId;
     }
 }

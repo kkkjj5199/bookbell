@@ -21,5 +21,6 @@ public class LoginController {
     @GetMapping("/google")
     public void getGoogleAuth(HttpServletResponse response) throws IOException {
 //        log.info("initURL={}",);
+        System.out.println("he");
     }
 }
