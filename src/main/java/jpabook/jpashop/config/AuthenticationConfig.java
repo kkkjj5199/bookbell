@@ -36,27 +36,17 @@ public class AuthenticationConfig {
                             .anyRequest().permitAll()
                            )
                     .formLogin(form -> form
-                            .loginPage("/login")
-                            .loginProcessingUrl("/loginProc")
-                            .defaultSuccessUrl("/")
+//                            .loginPage("/")
+                            .loginProcessingUrl("/hello")
+                            .defaultSuccessUrl("/hello")
                             .permitAll()
                     )
                     .oauth2Login(oauth2 -> oauth2
-                                    .loginPage("/login")
+                                    .loginPage("/")
                                     .userInfoEndpoint(userInfo -> userInfo
                                             .userService(principalOauth2UserService))
                             );
 
-
-
-//                    .oauth2Login(oaut2 -> oaut2
-//                            .loginPage("/login"))
-//
-////                            .authorizationEndpoint(authorization -> authorization
-////                                    .baseUri("/login/oauth/authorization")
-////                            )
-////
-////                    );
 
             return http.build();
         }

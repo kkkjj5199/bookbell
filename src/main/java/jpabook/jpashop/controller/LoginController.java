@@ -12,15 +12,20 @@ import java.io.IOException;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/login/oauth2/authorization",produces = "application/json")
+
 public class LoginController {
 
 
     LoginService loginService;
 
-    @GetMapping("/google")
-    public void getGoogleAuth(HttpServletResponse response) throws IOException {
-//        log.info("initURL={}",);
-        System.out.println("he");
+//    @GetMapping("/login")
+//    public void getGoogleAuth(HttpServletResponse response) throws IOException {
+////        log.info("initURL={}",);
+//        System.out.println("he");
+//    }
+
+    @GetMapping("login")
+    public String login() {
+        return "login";
     }
 }

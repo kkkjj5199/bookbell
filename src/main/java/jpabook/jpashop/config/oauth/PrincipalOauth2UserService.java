@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import jpabook.jpashop.config.auth.PrincipalDetails;
 import jpabook.jpashop.config.oauth.provider.GoogleUserInfo;
+import jpabook.jpashop.config.oauth.provider.KakaoUserInfo;
 import jpabook.jpashop.config.oauth.provider.NaverUserInfo;
 import jpabook.jpashop.config.oauth.provider.OAuthUserInfo;
 import jpabook.jpashop.domain.Member;
@@ -14,6 +15,7 @@ import jpabook.jpashop.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+       // 기본 OAuth2UserService 객체 생성
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         System.out.println("userRequest clientReisgration : " + userRequest.getClientRegistration());
@@ -49,6 +52,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("네이버 로그인");
             oAuthUserInfo = new NaverUserInfo( (Map)oAuth2User.getAttributes().get("response") );
 
+        }else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")){
+            System.out.println("카카오 로그인");
+            Map<String,Object> account = (Map<String, Object>)oAuth2User.getAttributes().get("kakao_account");
+            Map<String,Object> profile = (Map<String, Object>) account.get("profile");
+            oAuthUserInfo = new KakaoUserInfo(profile);
         }
 
         Optional<Member> userOptional = loginRepository.findByProviderAndProviderId(oAuthUserInfo.getProvider(), oAuthUserInfo.getProviderId());
@@ -57,7 +65,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         if(userOptional.isPresent()){
             member = userOptional.get();
-            memberRepository.save(member);
+            return new PrincipalDetails(memberRepository.findOne(member.getId()),oAuth2User.getAttributes());
 
         }else{
             member = Member.builder()

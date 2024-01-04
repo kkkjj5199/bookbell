@@ -2,11 +2,11 @@ package jpabook.jpashop.config.oauth.provider;
 
 import java.util.Map;
 
-public class NaverUserInfo implements OAuthUserInfo{
+public class KakaoUserInfo implements OAuthUserInfo {
 
     private Map<String,Object> attribute;
 
-    public NaverUserInfo(Map<String,Object> attribute){
+    public KakaoUserInfo(Map<String, Object> attribute) {
         this.attribute = attribute;
     }
 
@@ -17,7 +17,7 @@ public class NaverUserInfo implements OAuthUserInfo{
 
     @Override
     public String getProvider() {
-        return "naver";
+        return "kakao";
     }
 
     @Override
@@ -27,6 +27,8 @@ public class NaverUserInfo implements OAuthUserInfo{
 
     @Override
     public String getName() {
-        return (String) attribute.get("name");
+        return (String) attribute.get("nickname");
     }
+
+
 }
